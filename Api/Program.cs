@@ -4,6 +4,8 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using EnterprisePatterns.Api.Common.Infrastructure.Persistence.NHibernate;
+using EnterprisePatterns.Api.Customers;
 
 namespace EnterprisePatterns.Api
 {
