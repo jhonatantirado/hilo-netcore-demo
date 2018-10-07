@@ -59,8 +59,10 @@ namespace EnterprisePatterns.Api.Controllers
             {
                 uowStatus = _unitOfWork.BeginTransaction();
 
-                Customer customer = new Customer();
-                customer.OrganizationName = customerDto.OrganizationName;
+                Customer customer = new Customer
+                {
+                    OrganizationName = customerDto.OrganizationName
+                };
                 notification = customer.validateForSave();
 
                 if (notification.hasErrors())
@@ -69,6 +71,45 @@ namespace EnterprisePatterns.Api.Controllers
                 }
 
                 _customerRepository.Create(customer);
+
+                _unitOfWork.Commit(uowStatus);
+                return StatusCode(StatusCodes.Status201Created, new ApiStringResponseDto("Customer created!"));
+            }
+            catch (Exception ex)
+            {
+                _unitOfWork.Rollback(uowStatus);
+                Console.WriteLine(ex.StackTrace);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiStringResponseDto("Internal Server Error"));
+
+            }
+        }
+
+        [Route("hilo")]
+        [HttpPost]
+        public IActionResult CreateHiLo([FromBody] CustomerDto customerDto)
+        {
+            var batch = Constants.HiloBatch/2;
+            Notification notification = new Notification();
+            bool uowStatus = false;
+            try
+            {
+                uowStatus = _unitOfWork.BeginTransaction();
+
+                for (var i = 1; i <= batch; i++)
+                {
+                    Customer customer = new Customer
+                    {
+                        OrganizationName = customerDto.OrganizationName + i
+                    };
+                    notification = customer.validateForSave();
+
+                    if (notification.hasErrors())
+                    {
+                        return StatusCode(StatusCodes.Status400BadRequest, notification.ToString());
+                    }
+
+                    _customerRepository.Create(customer);
+                }
 
                 _unitOfWork.Commit(uowStatus);
                 return StatusCode(StatusCodes.Status201Created, new ApiStringResponseDto("Customer created!"));

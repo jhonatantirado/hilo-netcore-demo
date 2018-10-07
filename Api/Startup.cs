@@ -52,30 +52,7 @@ namespace EnterprisePatterns.Api
 
             app.UseHttpsRedirection();
             app.UseMvc();
-            TestHiloStrategy();
         }
 
-        public static void TestHiloStrategy()
-        {
-            var sessionFactory = new SessionFactory(Environment.GetEnvironmentVariable("MYSQL_STRCON_HILO_DEMO"));
-            using (var session = sessionFactory.OpenSession())
-            using (var transaction = session.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
-            {
-
-                for (var i = 0; i < 30; i++)
-                {
-                    var customer = new Customer()
-                    {
-                        OrganizationName = "ORG" + i
-                    };
-
-                    session.Save(customer);
-                }
-                transaction.Commit();
-            }
-
-            Console.WriteLine("Done");
-            Console.ReadLine();
-        }
     }
 }
