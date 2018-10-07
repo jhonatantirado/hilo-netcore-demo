@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>EnterprisePatterns.Api</AssemblyName>
+    <RootNamespace>EnterprisePatterns.Api</RootNamespace>
+    <UserSecretsId>2e096208-61ba-4a39-86be-832f73052ec0</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<EmbeddedResource Include="Migrations\MySQL\1_customer.sql" />
+	<EmbeddedResource Include="Migrations\MySQL\2_IdsTable.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="FluentMigrator" Version="3.1.3" />
+    <PackageReference Include="FluentMigrator.Runner" Version="3.1.3" />
+    <PackageReference Include="FluentMigrator.Runner.MySql" Version="3.1.3" />
+    <PackageReference Include="FluentNHibernate" Version="2.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="MySql.Data" Version="8.0.12" />
+    <PackageReference Include="NHibernate" Version="5.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\Domain\" />
+  </ItemGroup>
+
+</Project>
