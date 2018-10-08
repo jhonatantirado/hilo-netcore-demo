@@ -86,9 +86,9 @@ namespace EnterprisePatterns.Api.Controllers
 
         [Route("hilo")]
         [HttpPost]
-        public IActionResult CreateHiLo([FromBody] CustomerDto customerDto)
+        public IActionResult CreateHiLo([FromBody] CustomerDto customerDto, [FromQuery] int n = 1)
         {
-            var batch = Constants.HiloBatch/2;
+            var batch = (n == 0 ? Constants.batchSize:n);
             Notification notification = new Notification();
             bool uowStatus = false;
             try

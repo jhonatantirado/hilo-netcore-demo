@@ -7,6 +7,6 @@ namespace EnterprisePatterns.Api.Common.Application
 {
     public class Constants
     {
-        public static int HiloBatch = 10;
+        public static int batchSize = 5;
     }
 }
